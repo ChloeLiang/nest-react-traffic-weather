@@ -1,0 +1,1 @@
+GET http://localhost:3000/api/traffic-weather?dateTime=2023-08-26T08:00:00

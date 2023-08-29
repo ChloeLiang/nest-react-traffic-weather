@@ -7,7 +7,9 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    HttpModule,
+    HttpModule.register({
+      timeout: 5000,
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'client', 'dist'),
     }),
