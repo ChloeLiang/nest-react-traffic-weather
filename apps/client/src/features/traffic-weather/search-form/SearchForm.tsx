@@ -1,20 +1,17 @@
+import { FormEvent } from 'react';
 import { DatePicker, TimePicker } from '@/features/form';
 import { Button } from '@/features/ui';
 import './SearchForm.scss';
 
-const SearchForm = () => {
+interface IProps {
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
+
+const SearchForm = (props: IProps) => {
+  const { onSubmit } = props;
+
   return (
-    <form
-      className="traffic-weather-search-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const date = formData.get('date');
-        const time = formData.get('time');
-        console.log('date', date);
-        console.log('time', time);
-      }}
-    >
+    <form className="traffic-weather-search-form" onSubmit={onSubmit}>
       <DatePicker
         className="traffic-weather-form-item"
         name="date"
