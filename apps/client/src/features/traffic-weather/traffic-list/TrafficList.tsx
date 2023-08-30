@@ -1,4 +1,4 @@
-import Card from '@/features/ui/card';
+import { Card } from '@/features/ui';
 import { ITrafficWeather } from '../apis/types';
 import './TrafficList.scss';
 

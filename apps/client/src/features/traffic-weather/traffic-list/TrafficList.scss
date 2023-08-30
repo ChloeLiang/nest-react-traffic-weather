@@ -1,5 +1,10 @@
+@use '@/styles/mixins';
+
 .traffic-weather-traffic-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+
+  @include mixins.bp(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
