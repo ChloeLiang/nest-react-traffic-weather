@@ -13,6 +13,7 @@ const Home = () => {
   const [location, setLocation] = useState('');
   const [trafficWeatherData, setTrafficWeatherData] =
     useState<ITrafficWeather | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredTrafficData =
     trafficWeatherData?.traffic.filter((item) => item.area === location) || [];
@@ -23,7 +24,10 @@ const Home = () => {
   const weather = trafficWeatherData?.weather[location];
 
   useEffect(() => {
-    fetchTrafficWeather().then(setTrafficWeatherData);
+    fetchTrafficWeather().then((res) => {
+      setTrafficWeatherData(res);
+      setIsLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -41,25 +45,38 @@ const Home = () => {
     const formData = new FormData(e.currentTarget);
     const date = formData.get('date');
     const time = formData.get('time');
-    const res = await fetchTrafficWeather(String(date), String(time));
-    setTrafficWeatherData(res);
+    try {
+      setIsLoading(true);
+      const res = await fetchTrafficWeather(String(date), String(time));
+      setTrafficWeatherData(res);
+      setIsLoading(false);
+    } catch (e) {
+      setTrafficWeatherData({ traffic: [], weather: {} });
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="traffic-weather">
       <SearchForm onSubmit={handleSubmit} />
       <div className="traffic-weather__filter">
-        <Select
-          name="location"
-          label="Location"
-          options={locationOptions}
-          onChange={(e) => {
-            setLocation(e.target.value);
-          }}
-        />
-        <div className="traffic-weather__weather">
-          <strong>{weather}</strong>
-        </div>
+        {!isLoading ? (
+          <>
+            <Select
+              name="location"
+              label="Location"
+              options={locationOptions}
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
+            />
+            <div className="traffic-weather__weather">
+              <strong>{weather}</strong>
+            </div>
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
       <TrafficList items={filteredTrafficData} />
     </div>
