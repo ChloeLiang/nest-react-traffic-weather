@@ -1,1 +1,1 @@
-export type { ITrafficWeather } from './fetchTrafficWeatherTypes';
+export type { ITraffic, ITrafficWeather } from './fetchTrafficWeatherTypes';

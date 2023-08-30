@@ -11,25 +11,28 @@ import './TrafficWeather.scss';
 
 const Home = () => {
   const [location, setLocation] = useState('');
-  const [trafficWeatherData, setTrafficWeatherData] = useState<
-    ITrafficWeather[]
-  >([]);
+  const [trafficWeatherData, setTrafficWeatherData] =
+    useState<ITrafficWeather | null>(null);
 
-  const filteredTrafficWeatherData = trafficWeatherData.filter(
-    (item) => item.area === location,
-  );
+  const filteredTrafficData =
+    trafficWeatherData?.traffic.filter((item) => item.area === location) || [];
 
   const locationOptions = [
-    ...new Set(trafficWeatherData.map((item) => item.area)),
+    ...new Set(trafficWeatherData?.traffic.map((item) => item.area) || []),
   ];
+  const weather = trafficWeatherData?.weather[location];
 
   useEffect(() => {
     fetchTrafficWeather().then(setTrafficWeatherData);
   }, []);
 
   useEffect(() => {
-    if (trafficWeatherData?.length > 0 && !location) {
-      setLocation(trafficWeatherData[0].area);
+    if (
+      trafficWeatherData?.traffic &&
+      trafficWeatherData.traffic.length > 0 &&
+      !location
+    ) {
+      setLocation(trafficWeatherData.traffic[0].area);
     }
   }, [trafficWeatherData, location]);
 
@@ -45,15 +48,20 @@ const Home = () => {
   return (
     <div className="traffic-weather">
       <SearchForm onSubmit={handleSubmit} />
-      <Select
-        name="location"
-        label="Location"
-        options={locationOptions}
-        onChange={(e) => {
-          setLocation(e.target.value);
-        }}
-      />
-      <TrafficList items={filteredTrafficWeatherData} />
+      <div className="traffic-weather__filter">
+        <Select
+          name="location"
+          label="Location"
+          options={locationOptions}
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+        />
+        <div className="traffic-weather__weather">
+          <strong>{weather}</strong>
+        </div>
+      </div>
+      <TrafficList items={filteredTrafficData} />
     </div>
   );
 };

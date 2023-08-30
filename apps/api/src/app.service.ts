@@ -62,21 +62,23 @@ export class AppService {
       this.getWeather(dateTime),
     ]);
 
-    return trafficData
-      .map((camera) => {
-        const area = this.findLocationName(
-          weatherData.areaMetaData,
-          camera.location.latitude,
-          camera.location.longitude,
-        );
+    return {
+      traffic: trafficData
+        .map((camera) => {
+          const area = this.findLocationName(
+            weatherData.areaMetaData,
+            camera.location.latitude,
+            camera.location.longitude,
+          );
 
-        return {
-          ...camera,
-          area,
-          weatherForecast: weatherData.forecasts[area],
-        };
-      })
-      .sort((a, b) => (a.area > b.area ? 1 : b.area > a.area ? -1 : 0));
+          return {
+            ...camera,
+            area,
+          };
+        })
+        .sort((a, b) => (a.area > b.area ? 1 : b.area > a.area ? -1 : 0)),
+      weather: weatherData.forecasts,
+    };
   }
 
   findLocationName(

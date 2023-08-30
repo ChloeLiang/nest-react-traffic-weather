@@ -3,6 +3,7 @@
 .traffic-weather {
   &-search-form {
     display: flex;
+    flex-wrap: wrap;
     align-items: end;
     gap: 8px;
 

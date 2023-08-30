@@ -1,4 +1,4 @@
-export interface ITrafficWeather {
+export interface ITraffic {
   area: string;
   camera_id: string;
   image: string;
@@ -12,5 +12,11 @@ export interface ITrafficWeather {
     longitude: number;
   };
   timestamp: string;
-  weatherForecast: string;
+}
+
+export interface ITrafficWeather {
+  traffic: ITraffic[];
+  weather: {
+    [key: string]: string;
+  };
 }

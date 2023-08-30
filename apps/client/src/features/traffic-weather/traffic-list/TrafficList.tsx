@@ -1,9 +1,9 @@
 import { Card } from '@/features/ui';
-import { ITrafficWeather } from '../apis/types';
+import { ITraffic } from '../apis/types';
 import './TrafficList.scss';
 
 interface IProps {
-  items: ITrafficWeather[];
+  items: ITraffic[];
 }
 
 const TrafficList = (props: IProps) => {

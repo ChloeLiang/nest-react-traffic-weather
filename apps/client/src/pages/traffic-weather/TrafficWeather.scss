@@ -1,5 +1,22 @@
+@use '@/styles/mixins';
+
 .traffic-weather {
   max-width: 114rem;
   margin: 0 auto;
   padding: 16px;
+
+  &__filter {
+    margin: 16px 0;
+
+    @include mixins.bp(sm) {
+      display: flex;
+      gap: 16px;
+      align-items: end;
+    }
+  }
+
+  &__weather {
+    font-size: 2.4rem;
+    line-height: 2;
+  }
 }
