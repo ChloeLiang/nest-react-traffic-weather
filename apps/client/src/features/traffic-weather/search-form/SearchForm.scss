@@ -1,0 +1,13 @@
+@use '@/styles/mixins';
+
+.traffic-weather {
+  &-search-form {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+
+    @include mixins.bp(sm) {
+      max-width: 114rem;
+    }
+  }
+}

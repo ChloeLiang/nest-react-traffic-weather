@@ -73,7 +73,7 @@ export class AppService {
         return {
           ...camera,
           area,
-          forecast: weatherData.forecasts[area],
+          weatherForecast: weatherData.forecasts[area],
         };
       })
       .sort((a, b) => (a.area > b.area ? 1 : b.area > a.area ? -1 : 0));
